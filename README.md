@@ -12,3 +12,4 @@
   3. npx express-generator --view=ejs .
   4. npm install
   5. npm start
+2. aaa
