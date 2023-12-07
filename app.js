@@ -9,7 +9,7 @@ var logger = require('morgan');
 
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('test_db', 'root', 'password', {
+const sequelize = new Sequelize('test_db', 'root', 'root', {
   host: 'mysql-service',
   dialect: 'mysql',
 });
@@ -26,6 +26,18 @@ router.get("/", async (req, res, next) => {
 })
 
 var app = express();
+
+app.get("/hello", async function(req, res, next) {
+  console.log("hello")
+  try {
+    await sequelize.authenticate();
+    console.log("Connection with MySQL has been extablished.");
+  } catch(error) {
+    console.error("Cannot connect with MySQL");
+    console.error(error);
+  }
+  res.json({"aa": "bb"})
+})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
