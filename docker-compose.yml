@@ -1,13 +1,6 @@
 version: '1.0'
 
 services:
-  express-service:
-    image: express-mysql-image
-    build:
-      dockerfile: ./Dockerfile
-    ports:
-      - 3000:3000
-
   mysql-service:
     image: mysql
     environment:
@@ -17,6 +10,22 @@ services:
       - 3300:3300
     volumes:
       - mysql_volumes:/var/lib/mysql
+    networks:
+      - my-network
+
+  express-service:
+    image: express-mysql-image
+    build:
+      dockerfile: ./Dockerfile
+    depends_on:
+      - mysql-service
+    ports:
+      - 3000:3000
+    networks:
+      - my-network
 
 volumes:
   mysql_volumes:
+
+networks:
+  my-network:
